@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>昆明冬鸟手帐</title>
+<meta name="description" content="昆明 11–4 月观鸟：半月日程、36 种鸟的图鉴、入门手册和天气。记录只存在本机。">
+<meta name="theme-color" content="#f2ede5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e1b17" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="冬鸟手帐">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./fonts/lxgwwenkaigbscreen/result.min.css">
+<link rel="stylesheet" href="./fonts/lxgwwenkaimonogbscreen/result.min.css">
+<style>
+/* 布局：手机单栏，一屏一个任务；底部固定四个标签（日程 / 图鉴 / 手册 / 我的）。
+   配色沿用「慢慢联系」：燕麦（默认）/ 暮紫，各有浅深两套；不用纯白纯黑；无动画；实线细边框。 */
+:root {
+  --bg: #f2ede5;
+  --surface: #faf7f2;
+  --surface-2: #ece5da;
+  --text: #3a332b;
+  --muted: #675e52;
+  --border: #e0d6c7;
+  --accent: #7e6447;
+  --accent-text: #faf7f2;
+  --accent-soft: #ebe1d3;
+  --accent-strong: #5e4a34;
+  --warn: #9a7a35;
+  --illo-ink: #8c7b66;
+  --illo-fill: #e8dcc9;
+  --font-body: 'LXGW WenKai GB Screen', 'LXGW WenKai Screen', 'LXGW WenKai', 'LXGW WenKai TC', 'Kaiti SC', 'STKaiti', -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --font-data: 'LXGW WenKai Mono GB Screen', 'LXGW WenKai Mono TC', ui-monospace, 'SF Mono', Menlo, monospace;
+  --fs-s: 0.8125rem;
+  --fs-m: 0.9375rem;
+  --fs-b: 1rem;
+  --fs-l: 1.1875rem;
+  --fs-xl: 1.5rem;
+  --r: 8px;
+  --bar-h: 58px;
+  color-scheme: light;
+}
+:root[data-palette="dusk"] {
+  --bg: #eeecf1; --surface: #f8f7fa; --surface-2: #e6e3ec; --text: #322f3a; --muted: #625e75;
+  --border: #dcd8e3; --accent: #645e80; --accent-text: #f8f7fa; --accent-soft: #e3e0ec; --accent-strong: #4a4563;
+  --warn: #8f7738; --illo-ink: #7d7896; --illo-fill: #dfdbea;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1e1b17; --surface: #27231e; --surface-2: #312c26; --text: #ded6ca; --muted: #b3a898;
+    --border: #3d372f; --accent: #a99174; --accent-text: #1f1913; --accent-soft: #3a3128; --accent-strong: #e3cfb2;
+    --warn: #c4a765; --illo-ink: #a8977f; --illo-fill: #3a3128;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"])[data-palette="dusk"] {
+    --bg: #1b1a20; --surface: #24232b; --surface-2: #2e2c36; --text: #dad7e1; --muted: #ada8bc;
+    --border: #3a3845; --accent: #9890b8; --accent-text: #1c1a24; --accent-soft: #34314a; --accent-strong: #d3cdea;
+    --warn: #c2a768; --illo-ink: #8f89aa; --illo-fill: #34314a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1e1b17; --surface: #27231e; --surface-2: #312c26; --text: #ded6ca; --muted: #b3a898;
+  --border: #3d372f; --accent: #a99174; --accent-text: #1f1913; --accent-soft: #3a3128; --accent-strong: #e3cfb2;
+  --warn: #c4a765; --illo-ink: #a8977f; --illo-fill: #3a3128;
+  color-scheme: dark;
+}
+:root[data-theme="dark"][data-palette="dusk"] {
+  --bg: #1b1a20; --surface: #24232b; --surface-2: #2e2c36; --text: #dad7e1; --muted: #ada8bc;
+  --border: #3a3845; --accent: #9890b8; --accent-text: #1c1a24; --accent-soft: #34314a; --accent-strong: #d3cdea;
+  --warn: #c2a768; --illo-ink: #8f89aa; --illo-fill: #34314a;
+}
+:root[data-font="large"] { font-size: 18.5px; }
+
+*, *::before, *::after { box-sizing: border-box; animation: none !important; scroll-behavior: auto !important; }
+html { -webkit-text-size-adjust: 100%; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font-body); font-size: var(--fs-b); line-height: 1.7; letter-spacing: 0.01em;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: var(--accent-strong); text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; line-height: 1.35; margin: 0; font-weight: 700; }
+p { margin: 0; }
+ul, ol { margin: 0; }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+button { font: inherit; color: inherit; }
+
+.shell {
+  max-width: 680px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: calc(18px + env(safe-area-inset-top, 0px)) calc(var(--bar-h) + env(safe-area-inset-bottom, 0px) + 32px);
+}
+.view { display: flex; flex-direction: column; gap: 20px; }
+.view[hidden] { display: none; }
+.pagehead { display: flex; flex-direction: column; gap: 4px; }
+.pagehead h1 { font-size: var(--fs-xl); }
+.pagehead .sub { color: var(--muted); font-size: var(--fs-s); }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card h2 { font-size: var(--fs-l); }
+.card h3 { font-size: var(--fs-b); }
+.label { font-size: var(--fs-s); color: var(--muted); letter-spacing: 0.06em; }
+.note { font-size: var(--fs-s); color: var(--muted); }
+.row { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+.btn { font-size: var(--fs-m); padding: 6px 14px; border-radius: 6px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-text); cursor: pointer; transition: background-color 120ms, color 120ms; }
+.btn.quiet { background: var(--surface); color: var(--accent-strong); border-color: var(--border); }
+.btn[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-strong); border-color: var(--accent); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+.chip { display: inline-block; font-size: var(--fs-s); border: 1px solid var(--border); background: var(--bg); border-radius: 6px; padding: 1px 10px; color: var(--text); text-decoration: none; }
+a.chip:hover { border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.seg button { font-size: var(--fs-s); background: transparent; border: 0; padding: 5px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); }
+
+/* 日程 */
+.period-nav { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; }
+.period-nav select { width: 100%; font: inherit; font-size: var(--fs-b); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); }
+.facts > div { padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.facts > div + div { border-left: 1px solid var(--border); }
+.facts .v { font-family: var(--font-data); font-variant-numeric: tabular-nums; font-size: var(--fs-l); }
+.facts .k { font-size: var(--fs-s); color: var(--muted); }
+.plan-title { display: flex; flex-direction: column; gap: 6px; }
+.plan-title h2 { font-size: var(--fs-xl); }
+.tag-now { display: inline-block; font-size: var(--fs-s); padding: 0 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent-strong); border: 1px solid var(--accent); margin-left: 8px; vertical-align: 3px; font-weight: 400; }
+ol.route { padding-left: 1.5em; display: flex; flex-direction: column; gap: 8px; }
+ol.route li::marker { font-family: var(--font-data); color: var(--muted); }
+ol.route b { font-weight: 700; }
+ul.plain { padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.timebox { display: flex; flex-direction: column; gap: 6px; }
+.timeline { position: relative; height: 34px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); overflow: hidden; }
+.timeline .day { position: absolute; top: 0; bottom: 0; background: var(--surface-2); }
+.timeline .best { position: absolute; top: 6px; bottom: 6px; background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 4px; }
+.timeline .tick { position: absolute; bottom: 1px; font-family: var(--font-data); font-size: 11px; color: var(--muted); transform: translateX(-50%); }
+.weather { display: flex; flex-direction: column; gap: 8px; }
+.wx-tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: var(--fs-s); }
+th, td { padding: 6px 6px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+th { color: var(--muted); font-weight: 400; }
+td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.ok { color: var(--accent-strong); }
+.so { color: var(--warn); }
+.crowd { display: inline-flex; gap: 3px; vertical-align: -1px; }
+.crowd i { width: 8px; height: 8px; border-radius: 2px; border: 1px solid var(--muted); display: inline-block; }
+.crowd i.on { background: var(--muted); }
+
+/* 图鉴 */
+.filters { display: flex; flex-direction: column; gap: 10px; }
+.filters input[type="search"] { width: 100%; font: inherit; font-size: var(--fs-b); color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 7px 12px; }
+.filters .row { gap: 8px 12px; align-items: center; }
+.check { display: inline-flex; gap: 6px; align-items: center; font-size: var(--fs-s); color: var(--muted); }
+.check input { accent-color: var(--accent); width: 16px; height: 16px; }
+.splist { list-style: none; padding: 0; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.splist li + li { border-top: 1px solid var(--border); }
+.splist a { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; text-decoration: none; color: var(--text); }
+.splist a:hover { background: var(--surface-2); }
+.sp-name { font-size: var(--fs-b); font-weight: 700; }
+.sp-meta { font-size: var(--fs-s); color: var(--muted); }
+.seen-mark { font-size: var(--fs-s); color: var(--accent-strong); border: 1px solid var(--accent); border-radius: 4px; padding: 0 6px; white-space: nowrap; }
+.sil { width: 56px; height: 40px; display: block; }
+.sil * { fill: none; stroke: var(--illo-ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.sil .f { fill: var(--illo-fill); }
+.sil .g { stroke: var(--border); stroke-width: 1.2; }
+.sil .k { fill: var(--illo-ink); stroke: none; }
+.big-sil .sil { width: 112px; height: 80px; }
+.months { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; width: 108px; }
+.months span { height: 14px; border-radius: 2px; border: 1px solid var(--border); background: var(--bg); font-family: var(--font-data); font-size: 9px; line-height: 12px; text-align: center; color: var(--muted); }
+.months span.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-strong); }
+.months span.cur { outline: 1.5px solid var(--text); outline-offset: 0; }
+.months.wide { width: 100%; max-width: 360px; }
+.months.wide span { height: 26px; font-size: 12px; line-height: 24px; }
+.sp-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; }
+.sp-head h1 { font-size: var(--fs-xl); }
+.sp-head .sci { font-style: italic; color: var(--muted); font-size: var(--fs-s); }
+dl.kv { display: grid; grid-template-columns: 5em minmax(0, 1fr); gap: 6px 12px; margin: 0; font-size: var(--fs-m); }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; }
+.marks { padding-left: 1.2em; display: flex; flex-direction: column; gap: 6px; }
+.sizebar { position: relative; height: 40px; margin-top: 4px; }
+.sizebar .axis { position: absolute; left: 0; right: 0; top: 18px; border-top: 1px solid var(--border); }
+.sizebar .ref { position: absolute; top: 12px; width: 1px; height: 12px; background: var(--muted); }
+.sizebar .ref span { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+.sizebar .me { position: absolute; top: 9px; width: 12px; height: 18px; margin-left: -6px; border-radius: 3px; background: var(--accent); }
+.back { align-self: flex-start; }
+
+/* 手册 */
+.toc { list-style: none; padding: 0; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); overflow: hidden; }
+.toc li + li { border-top: 1px solid var(--border); }
+.toc a { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; text-decoration: none; color: var(--text); }
+.toc a:hover { background: var(--surface-2); }
+.toc .d { color: var(--muted); font-size: var(--fs-s); }
+.prose { display: flex; flex-direction: column; gap: 12px; max-width: 38em; }
+.prose h3 { font-size: var(--fs-b); margin-top: 6px; }
+.order { padding-left: 1.5em; display: flex; flex-direction: column; gap: 6px; }
+.order li::marker { font-family: var(--font-data); color: var(--muted); }
+.places { display: flex; flex-direction: column; gap: 12px; }
+
+/* 我的 */
+.stat { display: flex; gap: 24px; flex-wrap: wrap; }
+.stat div { display: flex; flex-direction: column; }
+.stat .v { font-family: var(--font-data); font-size: var(--fs-xl); font-variant-numeric: tabular-nums; }
+.stat .k { font-size: var(--fs-s); color: var(--muted); }
+.status { font-size: var(--fs-s); color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; }
+.pref { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* 底部标签 */
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: max(8px, env(safe-area-inset-left, 0px));
+  padding-right: max(8px, env(safe-area-inset-right, 0px));
+}
+.tabbar nav { max-width: 680px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); height: var(--bar-h); }
+.tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; color: var(--muted); font-size: 12px; border-radius: 6px; margin: 4px; }
+.tabbar a svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar a[aria-current="page"] { color: var(--accent-strong); background: var(--accent-soft); }
+
+@media (max-width: 460px) {
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts > div:nth-child(3) { border-left: 0; }
+  .facts > div:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .splist a { grid-template-columns: 48px minmax(0, 1fr); }
+  .splist .months { grid-column: 2; }
+  .sil { width: 48px; height: 34px; }
+}
+/* 照片 */
+.thumb { width: 56px; height: 56px; border-radius: 6px; object-fit: cover; display: block; background: var(--surface-2); border: 1px solid var(--border); }
+.photo { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.photo img { width: 100%; height: auto; border-radius: 6px; background: var(--surface-2); display: block; }
+.photo figcaption { font-size: var(--fs-s); color: var(--muted); }
+.photo figcaption a { color: var(--muted); }
+.credits { font-size: var(--fs-s); color: var(--muted); padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+details > summary { cursor: pointer; color: var(--accent-strong); font-size: var(--fs-m); }
+details[open] > summary { margin-bottom: 10px; }
+.file-in { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+@media (max-width: 460px) { .thumb { width: 48px; height: 48px; } }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <section class="view" id="v-plan" aria-labelledby="h-plan"></section>
+  <section class="view" id="v-guide" aria-labelledby="h-guide" hidden></section>
+  <section class="view" id="v-manual" aria-labelledby="h-manual" hidden></section>
+  <section class="view" id="v-me" aria-labelledby="h-me" hidden></section>
+</div>
+
+<div class="tabbar">
+  <nav aria-label="主要栏目">
+    <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>日程</span></a>
+    <a href="#guide" data-tab="guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5c3-1.2 5.5-1 8 .8 2.5-1.8 5-2 8-.8v13c-3-1.2-5.5-1-8 .8-2.5-1.8-5-2-8-.8z"/><path d="M12 6.3v13"/></svg><span>图鉴</span></a>
+    <a href="#manual" data-tab="manual"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h9l3 3v14H6z"/><path d="M9 10h6M9 13.5h6M9 17h4"/></svg><span>手册</span></a>
+    <a href="#me" data-tab="me"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l3 3 5-6"/></svg><span>我的</span></a>
+  </nav>
+</div>
+
+<script>
+'use strict';
+/* =========================================================
+   数据：地点
+   crowd：工作日 / 周末 人流，1 少 · 2 中 · 3 多
+   ========================================================= */
+const PLACES = {
+  haigeng: { n: '海埂大坝', area: '西山区 · 滇池北岸', crowd: [2, 3],
+    go: '导航到“海埂大坝”。打车最省事；观鸥季有季节性公交专线，线路以当年公布为准。',
+    open: '开放式堤岸，全天可进。',
+    note: '红嘴鸥在滇池的主要聚集点。堤岸长约 2 公里，从西段往东走，人会越来越少。' },
+  daguan: { n: '大观公园', area: '西山区 · 近一环', crowd: [2, 3],
+    go: '导航到“大观公园”，在一环附近，市区出发打车约 15–30 分钟。',
+    open: '收门票，开放时间以公园公告为准。',
+    note: '大观楼前水面与庾园一带有红嘴鸥；园内水道可看小䴙䴘、黑水鸡。2026 年 10 月 31 日首批红嘴鸥进园。' },
+  cuihu: { n: '翠湖公园', area: '五华区 · 市中心', crowd: [2, 3],
+    go: '导航到“翠湖公园”，市中心，地铁或步行可达。',
+    open: '开放式公园。',
+    note: '城区看鸥最方便的地点；湖面上有时有普通秋沙鸭、红头潜鸭、白眼潜鸭。周末和中午人多。' },
+  baofeng: { n: '宝丰湿地公园', area: '官渡区 · 新宝象河入湖口', crowd: [1, 2],
+    go: '地铁 5 号线宝丰站，或导航到“宝丰湿地公园”。',
+    open: '开放时间以公园公告为准。',
+    note: '有观鸟廊，周围生境岛吸引水鸟；记录过 100 多种鸟，包括灰鹤、彩鹮、池鹭、白鹭、苍鹭、黑水鸡、红隼。' },
+  laoyuhe: { n: '捞鱼河湿地公园', area: '呈贡区 · 环湖东路', crowd: [1, 2],
+    go: '导航到“捞鱼河湿地公园”。',
+    open: '8:30–18:00，免费。',
+    note: '滇池东岸，以“水上森林”著称；冬季可看鸥群和水鸭。下午顺光看西面湖面。' },
+  haihong: { n: '海洪湿地', area: '官渡区 · 滇池东北岸', crowd: [1, 2],
+    go: '导航到“海洪湿地”。',
+    open: '开放式湿地。',
+    note: '每年红嘴鸥最早落脚的地方。2026 年约 10 月 5 日观测到首批约 50 只。' },
+  nandianchi: { n: '南滇池国家湿地公园', area: '晋宁区 · 滇池南岸', crowd: [1, 1],
+    go: '导航到“南滇池国家湿地公园”，主城出发车程约 1 小时，建议自驾或打车。',
+    open: '开放时间以公园公告为准。',
+    note: '记录鸟种 100 多种，包括青头潜鸭（国家一级）、彩鹮、黑翅鸢、红隼。人少，适合慢慢看。' },
+  heilongtan: { n: '黑龙潭公园', area: '盘龙区 · 北郊', crowd: [1, 2],
+    go: '导航到“黑龙潭公园”，与昆明植物园隔路相对。',
+    open: '收门票，开放时间以公园公告为准。',
+    note: '林鸟和翠鸟的常用点位，有褐渔鸮记录。梅园在 1–2 月开花，花季周末人多。' },
+  zhiwuyuan: { n: '昆明植物园', area: '盘龙区 · 北郊', crowd: [1, 2],
+    go: '导航到“昆明植物园”，在黑龙潭公园对面。',
+    open: '收门票，开放时间以公园公告为准。',
+    note: '林鸟多，红嘴相思鸟常见。园区大，路线清楚，适合独自慢走。' },
+  xishan: { n: '西山森林公园 · 猫猫箐', area: '西山区', crowd: [1, 2],
+    go: '导航到“西山森林公园”；猫猫箐在其附近，植被茂密。',
+    open: '西山景区收门票；猫猫箐一带为山路。',
+    note: '记录有白颊噪鹛、黑胸鸫、红头长尾山雀、紫啸鸫、蓝翅希鹛、灰林䳭、棕背伯劳、黄臀鹎。' },
+  nianhu: { n: '会泽念湖（大桥水库）', area: '曲靖市会泽县 · 距昆明约 4 小时车程', crowd: [1, 2],
+    go: '自驾或包车。需要在会泽或大桥乡住一晚，建议安排 2 天。',
+    open: '会泽黑颈鹤国家级自然保护区，按保护区规定参观。',
+    note: '黑颈鹤与灰鹤越冬地。鹤群 11 月底数量最多，高峰期黑颈鹤可达七八百只。早晚大坝风大、很冷。' }
+};
+
+/* =========================================================
+   数据：鸟种
+   env：water 水边 · wood 林地公园 · far 周边远行
+   m：在昆明（或念湖）可见的月份，取 11 12 1 2 3 4
+   f：易见程度
+   ========================================================= */
+const SP = [
+{ id: 'hzo', n: '红嘴鸥', sci: 'Chroicocephalus ridibundus', len: '37–43', L: 40, t: 'gull', env: 'water', f: '常见', m: [11,12,1,2,3],
+  marks: ['冬季头部白色，眼后有一块深色耳斑。', '喙和腿红色，冬季喙尖发黑。', '飞行时翼尖黑色，外侧初级飞羽前缘是一道白色楔形。', '3 月离开前长出深褐色头罩，这时最容易和冬羽对比。'],
+  sim: '棕头鸥：体形更大，眼睛虹膜浅色，翼尖黑色中有白色斑点（翼镜）。',
+  where: ['haigeng', 'cuihu', 'daguan', 'haihong'],
+  tip: '1985 年起每年来昆明越冬，2026 年是第 42 年。白天进城，傍晚大群飞回滇池过夜。' },
+{ id: 'ztou', n: '棕头鸥', sci: 'Chroicocephalus brunnicephalus', len: '41–45', L: 43, t: 'gull', env: 'water', f: '较常见', m: [11,12,1,2,3],
+  marks: ['比红嘴鸥略大，喙更粗。', '虹膜浅黄或近白色，近看眼神发“空”。', '翼尖黑色，靠近末端有一两个白色圆斑（翼镜）。'],
+  sim: '红嘴鸥：翼尖没有白色圆斑，虹膜深色。',
+  where: ['haigeng', 'cuihu', 'haihong'],
+  tip: '混在红嘴鸥群里。看停在栏杆上的个体最容易比较眼睛和翼尖。' },
+{ id: 'gdj', n: '骨顶鸡', sci: 'Fulica atra', len: '36–39', L: 38, t: 'coot', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['全身黑灰色。', '白色的喙和额甲，远看像额头一块白。', '常潜水后浮起，在水面上点头前进。'],
+  sim: '黑水鸡：额甲红色，体侧有一道白纹。',
+  where: ['baofeng', 'laoyuhe', 'nandianchi'],
+  tip: '又名白骨顶。滇池湖面上常成大群。' },
+{ id: 'hsj', n: '黑水鸡', sci: 'Gallinula chloropus', len: '30–38', L: 33, t: 'coot', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['红色额甲，喙尖黄色。', '体侧有一道白色细纹。', '尾下覆羽白色，走路时尾巴一翘一翘。'],
+  sim: '骨顶鸡：额甲白色，体侧没有白纹。',
+  where: ['daguan', 'baofeng', 'heilongtan'],
+  tip: '公园水道和芦苇边缘都有，比骨顶鸡更靠近岸边。' },
+{ id: 'xpt', n: '小䴙䴘', sci: 'Tachybaptus ruficollis', len: '25–29', L: 27, t: 'grebe', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['很小、圆，尾部像没有尾巴。', '冬季全身褐色偏淡，颈侧色浅。', '春季繁殖羽：颈侧栗红色，嘴角一个黄白色斑点。', '频繁潜水，一下就不见了。'],
+  sim: '凤头䴙䴘：大很多，颈长且白。',
+  where: ['daguan', 'cuihu', 'baofeng', 'heilongtan'],
+  tip: '找它时看水面上的小圆点；潜下去后等 10–20 秒，常在几米外浮起。' },
+{ id: 'ftpt', n: '凤头䴙䴘', sci: 'Podiceps cristatus', len: '46–51', L: 48, t: 'grebe', env: 'water', f: '较常见', m: [11,12,1,2,3,4],
+  marks: ['颈长，前颈白色。', '冬季头顶黑色，脸白；喙粉红色、细长尖。', '春季长出黑色冠羽和棕色的“饰耳”。'],
+  sim: '小䴙䴘：小得多，颈短。',
+  where: ['haigeng', 'laoyuhe', 'nandianchi'],
+  tip: '在开阔湖面，离岸较远，需要望远镜。' },
+{ id: 'lc', n: '普通鸬鹚', sci: 'Phalacrocorax carbo', len: '77–94', L: 85, t: 'cormorant', env: 'water', f: '较常见', m: [11,12,1,2,3],
+  marks: ['大型黑色水鸟，喙尖带钩。', '游泳时身体压得很低，只露出背和颈。', '常停在木桩上展开翅膀晾干。'],
+  sim: '远看像潜鸭，但颈长、喙长带钩。',
+  where: ['haigeng', 'laoyuhe', 'nandianchi'],
+  tip: '飞行时排成线或 V 字，颈伸直。' },
+{ id: 'cl', n: '苍鹭', sci: 'Ardea cinerea', len: '90–98', L: 94, t: 'heron', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['大型灰色鹭，站立时很高。', '白头，有一道黑色眉纹延伸到脑后成辫羽。', '飞行时颈部缩成 S 形。'],
+  sim: '灰鹤：飞行时颈伸直，头顶有红斑。',
+  where: ['baofeng', 'laoyuhe', 'nandianchi'],
+  tip: '常在浅水里一动不动地站很久，耐心看它捕鱼。' },
+{ id: 'bl', n: '白鹭', sci: 'Egretta garzetta', len: '55–65', L: 60, t: 'heron', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['全身白色。', '喙黑色，腿黑色，脚趾黄色（像穿了黄袜子）。', '春季颈后有两根细长的辫羽。'],
+  sim: '大白鹭：大很多，冬季喙黄色，脚趾黑色。',
+  where: ['baofeng', 'laoyuhe', 'daguan'],
+  tip: '低头看脚：黄色脚趾是最快的区分点。' },
+{ id: 'cl2', n: '池鹭', sci: 'Ardeola bacchus', len: '约 47', L: 47, t: 'heron', env: 'water', f: '较常见', m: [11,12,1,2,3,4],
+  marks: ['冬季身体褐色，头颈有密集纵纹，不显眼。', '一起飞就露出全白的翅膀，对比很明显。', '4 月繁殖羽：头颈栗红色，背深蓝灰。'],
+  sim: '站着时容易当成一团枯草；起飞的白翅是确认点。',
+  where: ['baofeng', 'heilongtan'],
+  tip: '4 月下旬能看到换上繁殖羽的个体。' },
+{ id: 'rtqy', n: '红头潜鸭', sci: 'Aythya ferina', len: '42–49', L: 45, t: 'duck', env: 'water', f: '较常见', m: [11,12,1,2,3],
+  marks: ['雄鸟：栗红色头，黑色胸，灰白色背。', '雌鸟：头胸褐色，身体灰褐，眼周有淡色环。', '喙中段有一道浅灰色带。'],
+  sim: '白眼潜鸭雄鸟：全身深栗色，眼睛白色。',
+  where: ['cuihu', 'laoyuhe', 'nandianchi'],
+  tip: '潜鸭整个身体潜下水觅食，和在水面“倒立”的绿头鸭不同。' },
+{ id: 'byqy', n: '白眼潜鸭', sci: 'Aythya nyroca', len: '38–42', L: 40, t: 'duck', env: 'water', f: '少见', m: [11,12,1,2,3],
+  marks: ['雄鸟全身深栗褐色，虹膜白色。', '尾下覆羽白色，在深色身体上很显眼。', '雌鸟颜色较暗，虹膜深色，但同样有白色尾下覆羽。'],
+  sim: '红头潜鸭：背部灰白，头胸颜色分明。',
+  where: ['cuihu', 'nandianchi'],
+  tip: '翠湖有记录。在潜鸭群里找最深色、尾下有白块的那只。' },
+{ id: 'ftqy', n: '凤头潜鸭', sci: 'Aythya fuligula', len: '40–47', L: 44, t: 'duck', env: 'water', f: '较常见', m: [11,12,1,2,3],
+  marks: ['雄鸟黑白分明：黑头黑背，体侧白色。', '脑后垂着一撮冠羽。', '眼睛金黄色。'],
+  sim: '雌鸟褐色，有时喙基有一圈白，冠羽短。',
+  where: ['haigeng', 'laoyuhe', 'nandianchi'],
+  tip: '远处成群的黑白小鸭多半是它。' },
+{ id: 'qsy', n: '普通秋沙鸭', sci: 'Mergus merganser', len: '58–68', L: 63, t: 'duck', env: 'water', f: '少见', m: [12,1,2],
+  marks: ['喙红色、细长，末端带小钩。', '雄鸟头墨绿色，身体大部白色。', '雌鸟头棕红色带蓬松冠羽，与白色颈部界线清楚，身体灰色。'],
+  sim: '绿头鸭雄鸟也是绿头，但喙黄、扁宽，身体灰。',
+  where: ['cuihu', 'nandianchi'],
+  tip: '翠湖有记录，年份之间数量差别大，看到算运气。' },
+{ id: 'ltya', n: '绿头鸭', sci: 'Anas platyrhynchos', len: '50–65', L: 58, t: 'duck', env: 'water', f: '常见', m: [11,12,1,2,3],
+  marks: ['雄鸟：亮绿色头，白色细颈环，黄色喙。', '雌鸟：褐色带斑纹，喙橙色带黑斑。', '翅上有蓝紫色翼镜，两边镶白边。'],
+  sim: '公园里也有家鸭杂交个体，体形更胖、颜色不规则。',
+  where: ['daguan', 'baofeng', 'laoyuhe'],
+  tip: '大小参照常用它：“和绿头鸭差不多大”。' },
+{ id: 'bzy', n: '斑嘴鸭', sci: 'Anas zonorhyncha', len: '55–63', L: 59, t: 'duck', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['喙黑色，末端黄色。', '脸淡色，有一道深色贯眼纹和一道颊纹。', '雌雄相似。'],
+  sim: '绿头鸭雌鸟：喙橙色带黑斑，脸部没有两道深纹。',
+  where: ['baofeng', 'laoyuhe', 'nandianchi'],
+  tip: '看喙尖那一点黄就能确认。' },
+{ id: 'qtqy', n: '青头潜鸭', sci: 'Aythya baeri', len: '42–47', L: 45, t: 'duck', env: 'water', f: '稀有', prot: '国家一级', m: [11,12,1,2,3],
+  marks: ['雄鸟头部墨绿近黑色，眼睛白色。', '胸部栗色，体侧白色延伸到前方。', '雌鸟头部暗褐，眼深色，喙基有一块栗色斑。'],
+  sim: '白眼潜鸭：头部是栗色而非墨绿黑色。',
+  where: ['nandianchi'],
+  tip: '全球极危物种，南滇池有记录。不保证能看到；看到后保持距离，不要追近。' },
+{ id: 'cn', n: '普通翠鸟', sci: 'Alcedo atthis', len: '约 16', L: 16, t: 'kingfisher', env: 'water', f: '较常见', m: [11,12,1,2,3,4],
+  marks: ['背部蓝绿色，有金属光泽。', '腹部橙色，喙长而直。', '贴着水面直线快飞，常发出尖细的“嘀——”声。'],
+  sim: '体形像麻雀但头大尾短，颜色不会认错。',
+  where: ['heilongtan', 'baofeng', 'daguan'],
+  tip: '先听声音，再顺着水边找低处的枝条，它常停在同一根上反复入水。' },
+{ id: 'bjl', n: '白鹡鸰', sci: 'Motacilla alba', len: '约 18', L: 18, t: 'wagtail', env: 'water', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['黑、白、灰三色。', '长尾巴不停地上下摆动。', '波浪形飞行，边飞边叫。'],
+  sim: '灰鹡鸰：腹部黄色，常在溪边。',
+  where: ['haigeng', 'cuihu', 'baofeng'],
+  tip: '在堤岸地面上快步走，很容易看到。' },
+{ id: 'qjy', n: '青脚鹬', sci: 'Tringa nebularia', len: '30–35', L: 32, t: 'wader', env: 'water', f: '较常见', m: [3,4],
+  marks: ['灰白色中型鹬，腿黄绿色。', '喙较长，微微上翘。', '飞行时背部有一道白色楔形一直到腰。'],
+  sim: '泽鹬：更小更纤细，喙细直。',
+  where: ['baofeng', 'laoyuhe'],
+  tip: '春季过境时在浅滩出现，走动时喙在水里左右扫。' },
+{ id: 'hjh', n: '黑颈鹤', sci: 'Grus nigricollis', len: '约 115', L: 115, t: 'crane', env: 'far', f: '较常见', prot: '国家一级', m: [11,12,1,2,3],
+  marks: ['身体灰白色，头和颈黑色。', '头顶有红色裸皮，眼后有一小块白斑。', '站立时尾部看似黑色蓬松（实为三级飞羽）。'],
+  sim: '灰鹤：身体灰色，颈侧有一道白纹。',
+  where: ['nianhu'],
+  tip: '只在会泽念湖一带（不在昆明市区）。一般 10 月中旬至 11 月初到达，3 月中旬至 4 月初北返。' },
+{ id: 'hh', n: '灰鹤', sci: 'Grus grus', len: '100–120', L: 110, t: 'crane', env: 'far', f: '较常见', prot: '国家二级', m: [11,12,1,2,3],
+  marks: ['全身灰色。', '头颈黑色，眼后一道白纹沿颈侧向下。', '头顶有小块红斑。'],
+  sim: '黑颈鹤：身体灰白，颈全黑，没有白色颈纹。',
+  where: ['nianhu', 'baofeng'],
+  tip: '念湖的灰鹤通常比黑颈鹤早到约两周。宝丰湿地也有记录。' },
+{ id: 'hzxs', n: '红嘴相思鸟', sci: 'Leiothrix lutea', len: '14–15', L: 15, t: 'perch', env: 'wood', f: '常见', prot: '国家二级', m: [11,12,1,2,3,4],
+  marks: ['喙红色。', '喉和胸黄色到橙色。', '翅上有红色和黄色的斑块，尾黑而稍分叉。'],
+  sim: '颜色组合很独特，不太会认错。',
+  where: ['zhiwuyuan', 'heilongtan'],
+  tip: '常几只一起在灌丛下层穿梭，先听到一串“唧唧”声。' },
+{ id: 'bjzm', n: '白颊噪鹛', sci: 'Pterorhinus sannio', len: '21–25', L: 23, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['全身灰褐色。', '脸部有白色眉纹和白色脸颊，中间隔着褐色。', '尾下覆羽棕色。'],
+  sim: '在昆明的公园和小区都很常见，是认林鸟时的“基准鸟”之一。',
+  where: ['heilongtan', 'zhiwuyuan', 'xishan', 'cuihu'],
+  tip: '叫声大而杂，常在地上翻落叶。' },
+{ id: 'bhwq', n: '北红尾鸲', sci: 'Phoenicurus auroreus', len: '约 15', L: 15, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3],
+  marks: ['雄鸟：头顶灰白，脸和喉黑色，腹部橙色。', '雌鸟：全身灰褐色。', '雌雄翅上都有一块明显的白斑。', '停下时尾巴一抖一抖。'],
+  sim: '红胁蓝尾鸲雌鸟也是褐色，但尾巴蓝色、两胁橙色，翅上没有白斑。',
+  where: ['heilongtan', 'zhiwuyuan', 'xishan'],
+  tip: '冬候鸟。喜欢停在矮枝、栏杆上，比较不怕人。' },
+{ id: 'hxlwq', n: '红胁蓝尾鸲', sci: 'Tarsiger cyanurus', len: '13–15', L: 14, t: 'perch', env: 'wood', f: '较常见', m: [11,12,1,2,3],
+  marks: ['雄鸟背部蓝色，两胁橙色，喉白。', '雌鸟褐色，尾巴蓝色，两胁同样橙色。', '有一道细的白色眉纹（雄鸟较明显）。'],
+  sim: '北红尾鸲：翅上有白斑，尾巴是橙红色。',
+  where: ['zhiwuyuan', 'heilongtan'],
+  tip: '在林下阴暗处的地面或低枝，安静地站着看比走动更容易发现。' },
+{ id: 'hdb', n: '黄臀鹎', sci: 'Pycnonotus xanthorrhous', len: '约 20', L: 20, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['头顶黑色。', '胸前有一道褐色胸带。', '尾下覆羽黄色。'],
+  sim: '红臀鹎：尾下覆羽红色。',
+  where: ['xishan', 'heilongtan', 'zhiwuyuan'],
+  tip: '常停在树冠顶端或电线上，叫声清亮。' },
+{ id: 'htcw', n: '红头长尾山雀', sci: 'Aegithalos concinnus', len: '约 10', L: 10, t: 'longtail', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['头顶栗红色，脸上一块黑色“面罩”。', '喉部黑色，有白色眉纹。', '身体圆小，尾巴很长。'],
+  sim: '体形和配色在昆明没有相似种。',
+  where: ['xishan', 'zhiwuyuan', 'heilongtan'],
+  tip: '十几只一群在树枝间快速移动，常和柳莺、绣眼混群。' },
+{ id: 'hlj', n: '灰林䳭', sci: 'Saxicola ferreus', len: '约 15', L: 15, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['雄鸟灰色，白色长眉纹，黑色脸罩。', '雌鸟褐色，眉纹淡色。', '常停在灌丛顶端或突出的枝头。'],
+  sim: '黑喉石䳭：雄鸟头黑，胸橙。',
+  where: ['xishan', 'zhiwuyuan'],
+  tip: '开阔的林缘和农田边最多，从高处飞下捉虫再飞回。' },
+{ id: 'zblw', n: '棕背伯劳', sci: 'Lanius schach', len: '23–28', L: 25, t: 'longtail', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['黑色贯眼纹像戴了眼罩。', '背部和两胁棕色，头顶灰色。', '尾长而黑，喙带钩。'],
+  sim: '看到“停在高处、黑眼罩、长尾巴”就是它。',
+  where: ['xishan', 'baofeng'],
+  tip: '捕到虫或小蜥蜴会插在刺上储存。' },
+{ id: 'hzlq', n: '红嘴蓝鹊', sci: 'Urocissa erythroryncha', len: '54–65', L: 60, t: 'longtail', env: 'wood', f: '较常见', m: [11,12,1,2,3,4],
+  marks: ['喙和腿红色。', '头颈黑色，头顶白色。', '尾巴极长，蓝色带黑白端斑。'],
+  sim: '尾长占身长一半以上，不会认错。',
+  where: ['xishan', 'heilongtan'],
+  tip: '常几只一起在树间滑翔，叫声粗哑。体长包括长尾。' },
+{ id: 'hyx', n: '褐渔鸮', sci: 'Ketupa zeylonensis', len: '48–54', L: 51, t: 'owl', env: 'wood', f: '少见', prot: '国家二级', m: [11,12,1,2,3,4],
+  marks: ['大型猫头鹰，有耳羽簇。', '眼睛黄色。', '全身褐色带深色纵纹。'],
+  sim: '在昆明城区的鸮类里体形最大。',
+  where: ['heilongtan'],
+  tip: '白天在树上休息。远远看，不靠近，不用闪光灯，不播放叫声。' },
+{ id: 'hs', n: '红隼', sci: 'Falco tinnunculus', len: '31–38', L: 34, t: 'raptor', env: 'wood', f: '较常见', prot: '国家二级', m: [11,12,1,2,3,4],
+  marks: ['会在空中原地振翅“悬停”。', '雄鸟头灰色，背部砖红色带黑点。', '雌鸟全身棕色带横斑。'],
+  sim: '在开阔地上空悬停的小型猛禽基本是它。',
+  where: ['baofeng', 'xishan'],
+  tip: '注意电线杆顶和高压线塔。' },
+{ id: 'alxy', n: '暗绿绣眼鸟', sci: 'Zosterops simplex', len: '10–11', L: 10.5, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['背部黄绿色。', '一圈明显的白色眼圈。', '喉部黄色。'],
+  sim: '灰腹绣眼鸟：腹部灰色，喉部更黄、有黄色腹中线。',
+  where: ['heilongtan', 'zhiwuyuan', 'cuihu'],
+  tip: '12–2 月去开花的树下等：冬樱花和梅花上常有成群的绣眼。' },
+{ id: 'hylY', n: '黄腰柳莺', sci: 'Phylloscopus proregulus', len: '9–10', L: 9.5, t: 'perch', env: 'wood', f: '常见', m: [11,12,1,2,3],
+  marks: ['很小，绿色。', '黄色腰部，悬停或转身时可见。', '两道黄白色翼斑，头顶中央有一道淡色冠纹。'],
+  sim: '黄眉柳莺：没有黄腰，头顶无明显冠纹。',
+  where: ['zhiwuyuan', 'heilongtan', 'xishan'],
+  tip: '冬候鸟。动作快，看它在枝梢悬停的瞬间找黄腰。' },
+{ id: 'qq', n: '鹊鸲', sci: 'Copsychus saularis', len: '19–21', L: 20, t: 'longtail', env: 'wood', f: '常见', m: [11,12,1,2,3,4],
+  marks: ['雄鸟黑白两色：头胸背黑，腹白。', '翅上一道白色长斑。', '尾巴常翘起。'],
+  sim: '白鹡鸰也是黑白，但在地面走、尾巴上下摆。',
+  where: ['heilongtan', 'cuihu', 'xishan'],
+  tip: '3–4 月雄鸟在高处鸣唱，声音多变好听。' },
+{ id: 'zxd', n: '紫啸鸫', sci: 'Myophonus caeruleus', len: '29–35', L: 32, t: 'perch', env: 'wood', f: '较常见', m: [11,12,1,2,3,4],
+  marks: ['全身深紫蓝色，带细小亮斑。', '喙黄色。', '体形比鸽子略小，常在溪边石头上。'],
+  sim: '光线暗时看起来全黑，注意黄喙。',
+  where: ['xishan', 'heilongtan'],
+  tip: '在溪流和水沟边，停下时会展开尾巴。' }
+];
+const SPById = Object.fromEntries(SP.map(s => [s.id, s]));
+/* 照片：Wikimedia Commons，按各自 CC 许可使用，已缩小尺寸。a 作者 · l 许可 · u 原图页面 */
+const PHOTOS = {"hzo":{"w":640,"h":427,"a":"Charrine Liu","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Black_Headed_Gull_In_Kunming_China_(102444327).jpeg"},"ztou":{"w":640,"h":367,"a":"UdayKiran28","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Brown-headed_gull_-_non-breeding_adult.jpg"},"gdj":{"w":640,"h":427,"a":"Alexis Lours","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Eurasian_Coot_2023_11_25_03.jpg"},"hsj":{"w":640,"h":451,"a":"Alexis Lours","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Common_moorhen_(Gallinula_chloropus)_France.jpg"},"xpt":{"w":640,"h":427,"a":"Andreas Trepte","l":"CC BY-SA 2.5","u":"https://commons.wikimedia.org/wiki/File:Little_grebe_Zwergtaucher.jpg"},"ftpt":{"w":640,"h":427,"a":"JJ Harrison","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Podiceps_cristatus_2_-_Lake_Dulverton.jpg"},"lc":{"w":640,"h":480,"a":"MPF","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:2021-05-05_Phalacrocorax_carbo_carbo,_Killingworth_Lake,_Northumberland_1-1.jpg"},"cl":{"w":640,"h":479,"a":"Giacomo Cimino","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Il_pescatore_solitario.jpg"},"bl":{"w":480,"h":640,"a":"Shantanu Kuveskar","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Little_egret_(Egretta_garzetta)_Photograph_by_Shantanu_Kuveskar.jpg"},"cl2":{"w":640,"h":512,"a":"JJ Harrison","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Ardeola_bacchus_winter_plumage_-_Laem_Phak_Bia.jpg"},"rtqy":{"w":640,"h":427,"a":"Alexis Lours","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Common_Pochard_2025_11_15_04.jpg"},"byqy":{"w":640,"h":427,"a":"Francis C. Franklin","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Aythya_nyroca_at_Martin_Mere.jpg"},"ftqy":{"w":640,"h":427,"a":"Alexis Lours","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Tufted_Duck_09_05_2025_02.jpg"},"qsy":{"w":640,"h":417,"a":"Bengt Nyman from Vaxholm, Sweden","l":"CC BY 2.0","u":"https://commons.wikimedia.org/wiki/File:Mergus_merganser_merganser_2078_(5561922560).jpg"},"ltya":{"w":640,"h":640,"a":"Richard Bartz","l":"CC BY-SA 2.5","u":"https://commons.wikimedia.org/wiki/File:Anas_platyrhynchos_male_female_quadrat.jpg"},"bzy":{"w":640,"h":427,"a":"Alpsdake","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Anas_zonorhyncha_swimming.jpg"},"qtqy":{"w":640,"h":427,"a":"Sun Jiao (Interaccoonale)","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Aythya_baeri_cropped.jpg"},"cn":{"w":640,"h":640,"a":"Tony Wood","l":"CC BY 2.0","u":"https://commons.wikimedia.org/wiki/File:Alcedo_atthis_-England-8_(cropped).jpg"},"bjl":{"w":640,"h":427,"a":"Jac. Janssen from BAARLO LB, NL","l":"CC BY 2.0","u":"https://commons.wikimedia.org/wiki/File:20180415_015_Winterswijk_Witte_kwikstaart_(40785272624).jpg"},"qjy":{"w":640,"h":427,"a":"Andreas Trepte","l":"CC BY-SA 2.5","u":"https://commons.wikimedia.org/wiki/File:Common-Greenshank.jpg"},"hjh":{"w":640,"h":640,"a":"Sumeetmoghe","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Black_necked_crane_at_Hanle.jpg"},"hh":{"w":640,"h":640,"a":"Andreas Trepte","l":"CC BY-SA 2.5","u":"https://commons.wikimedia.org/wiki/File:Common_crane_grus_grus.jpg"},"hzxs":{"w":640,"h":427,"a":"孫鋒 林 from Taipei, Taiwan","l":"CC BY-SA 2.0","u":"https://commons.wikimedia.org/wiki/File:Leiothrix_lutea_lutea,_Guiyang,_Guizhou,_China_1.png"},"bjzm":{"w":640,"h":427,"a":"Ron Knight","l":"CC BY 2.0","u":"https://commons.wikimedia.org/wiki/File:Garrulax_sannio.jpg"},"bhwq":{"w":640,"h":503,"a":"Laitche","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Daurian_redstart_at_Daisen_Park_in_Osaka,_January_2016.jpg"},"hxlwq":{"w":640,"h":427,"a":"M.Nishimura","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Tarsiger_cyanurus.jpg"},"hdb":{"w":427,"h":640,"a":"Francesco Veronesi from Italy","l":"CC BY-SA 2.0","u":"https://commons.wikimedia.org/wiki/File:Brown-breasted_Bulbul_-_Thailand_S4E9144_(16429556574).jpg"},"htcw":{"w":640,"h":438,"a":"落凼落凼","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:%E7%BA%A2%E5%A4%B4%E9%95%BF%E5%B0%BE%E5%B1%B1%E9%9B%8020070208%E4%B8%89%E6%B1%9F-20.jpg"},"hlj":{"w":640,"h":489,"a":"J.M.Garg","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Grey_Bushchat_(male)_I_IMG_6728.jpg"},"zblw":{"w":640,"h":427,"a":"JJ Harrison","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Long-tailed_Shrilke_0A2A3080.jpg"},"hzlq":{"w":640,"h":480,"a":"Charles Lam from Hong Kong, China","l":"CC BY-SA 2.0","u":"https://commons.wikimedia.org/wiki/File:Urocissa_erythrorhyncha.jpg"},"hyx":{"w":553,"h":640,"a":"Somaskanda","l":"CC BY-SA 3.0","u":"https://commons.wikimedia.org/wiki/File:Brown_fishing_owl.jpg"},"hs":{"w":454,"h":640,"a":"Andreas Trepte","l":"CC BY-SA 2.5","u":"https://commons.wikimedia.org/wiki/File:Common_kestrel_falco_tinnunculus.jpg"},"alxy":{"w":640,"h":480,"a":"Charles Lam","l":"CC BY-SA 2.0","u":"https://commons.wikimedia.org/wiki/File:Resting_Zosterops_japonicus.jpg"},"qq":{"w":640,"h":427,"a":"Charles J. Sharp","l":"CC BY-SA 4.0","u":"https://commons.wikimedia.org/wiki/File:Oriental_magpie-robin_(Copsychus_saularis_ceylonensis)_male.jpg"},"zxd":{"w":640,"h":512,"a":"Jason Thompson","l":"CC BY 2.0","u":"https://commons.wikimedia.org/wiki/File:Blue_Whistling_Thrush_Thailand.jpg"},"hylY":{"w":498,"h":640,"a":"fedotova_elena","l":"CC BY 4.0","u":"https://commons.wikimedia.org/wiki/File:Pallas%27s_Leaf_Warbler,_Tunkinskiy_Rayon,_Buryat,_Russia_2.jpg"}};
+const thumbHtml = s => PHOTOS[s.id] ? `<img class="thumb" src="img/${s.id}.jpg" alt="" loading="lazy" decoding="async" width="56" height="56">` : sil(s.t);
+function photoHtml(s) {
+  const p = PHOTOS[s.id]; if (!p) return '';
+  return `<figure class="photo"><img src="img/${s.id}.jpg" alt="${s.n}的照片" width="${p.w}" height="${p.h}" decoding="async"><figcaption>照片：${esc(p.a)} · ${esc(p.l)} · <a href="${p.u}" target="_blank" rel="noopener">Wikimedia Commons 原图</a></figcaption></figure>`;
+}
+const ENV = { water: '水边', wood: '林地公园', far: '周边远行' };
+
+/* =========================================================
+   数据：日程（每半个月一期）
+   best：建议时段 [开始, 结束]，小时
+   ========================================================= */
+const PLANS = [
+{ id: '11a', m: 11, h: 1, title: '红嘴鸥进城：海埂大坝与大观公园', sp: ['hzo', 'ztou', 'xpt', 'hsj', 'bjl'], best: [8.5, 10.5],
+  time: '工作日上午 8:30–10:30。早上鸥群从滇池飞向城区，海埂大坝上空最热闹；大观公园 10 点后人开始变多。',
+  route: [['海埂大坝', '从西段进入，沿堤往东慢走 1 小时。先用肉眼看鸥群，再用望远镜挑停在栏杆上的个体看耳斑和喙色。'], ['大观公园', '打车约 20 分钟。在大观楼前水面看鸥，再沿园内水道找小䴙䴘和黑水鸡。'], ['结束', '11:30 前离开，避开午间人流。']],
+  prep: ['望远镜（8×42 或 8×32）', '薄羽绒或抓绒：早上 8–10°C，中午可到 18°C', '帽子和防晒：高原紫外线强', '图鉴页“红嘴鸥”“棕头鸥”先看一遍'],
+  care: ['鸥粮只在指定售卖点买，不喂面包、膨化食品。', '海埂大坝周末和节假日人很多，尽量选工作日。'] },
+{ id: '11b', m: 11, h: 2, title: '滇池东岸湿地：宝丰与捞鱼河', sp: ['gdj', 'cl', 'bl', 'rtqy', 'ftqy', 'bzy', 'hs'], best: [8.5, 10.5],
+  time: '上午 8:30–10:30 在宝丰，下午 15:30–17:30 在捞鱼河。午间鸟少，可以休息。',
+  route: [['宝丰湿地公园', '地铁 5 号线宝丰站。走到观鸟廊，面向生境岛坐下，等 20 分钟再开始数鸟，鸟会慢慢回来。'], ['午休', '回城或在附近吃饭。'], ['捞鱼河湿地公园', '下午到，开放至 18:00。从“水上森林”往湖边走，下午光线从背后来，湖面上的鸭子颜色更清楚。']],
+  prep: ['望远镜', '小折叠凳或坐垫：观鸟廊等待时用', '保温水杯', '记录本，按“鸟种 + 数量”记'],
+  care: ['湿地木栈道早上有霜或潮湿，注意防滑。', '这一期鸭类到齐，先学会区分“水面觅食”和“潜水觅食”两类鸭。'] },
+{ id: '12a', m: 12, h: 1, title: '城区鸥群与潜鸭：翠湖', sp: ['hzo', 'rtqy', 'byqy', 'qsy', 'xpt', 'alxy'], best: [8.5, 10],
+  time: '工作日 8:30–10:00。翠湖是开放式公园，早上人少，中午和周末人多。',
+  route: [['翠湖公园', '绕湖一圈约 40 分钟。先看鸥群，再到湖心安静的水面找潜鸭：深栗色、白眼睛的是白眼潜鸭。'], ['湖边树上', '如果有开花的树，停下来看绣眼鸟。'], ['可选：盘龙江', '沿江步行，鸥群沿河道分布。']],
+  prep: ['望远镜', '手套：12 月早上 4–6°C', '图鉴页“红头潜鸭”“白眼潜鸭”“普通秋沙鸭”'],
+  care: ['普通秋沙鸭每年数量不稳定，看不到很正常。'] },
+{ id: '12b', m: 12, h: 2, title: '黑颈鹤越冬地：会泽念湖（两天）', sp: ['hjh', 'hh', 'bzy', 'ltya'], best: [7, 9.5],
+  time: '第一天下午到达，16:30–18:30 看鹤群飞回湖边；第二天 6:30–9:30 看出飞。晴天约 7:20–8:15 开始离开夜宿地，下雪或结冰时推迟到上午 11–12 点。',
+  route: [['昆明出发', '早上出发，自驾或包车约 4 小时，到会泽县城或大桥乡住宿。'], ['第一天傍晚', '到念湖大坝，看鹤群从农田飞回湖面。'], ['第二天清晨', '天亮前到大坝等待，看鹤群出飞。'], ['返回', '上午 10 点后返程。']],
+  prep: ['厚羽绒服、手套、帽子：大坝早晚又冷又大风', '望远镜；有单筒望远镜更好', '提前订好住宿', '头灯：清晨天黑'],
+  care: ['不走进农田追鹤，不使用无人机。', '这是可选行程。不想远行的话，本期改去黑龙潭和植物园看林鸟（见 1 月上半月）。'] },
+{ id: '1a', m: 1, h: 1, title: '林鸟入门：黑龙潭与植物园', sp: ['hzxs', 'bjzm', 'bhwq', 'hxlwq', 'hylY', 'alxy', 'cn'], best: [9, 11.5],
+  time: '9:00–11:30。1 月是全年日出最晚的时候（约 7:50），林鸟在太阳照进树林后才活跃。',
+  route: [['昆明植物园', '沿主路慢走，在灌丛边停下听声音。红嘴相思鸟常在下层，柳莺在树梢。'], ['过马路到黑龙潭公园', '去水边找翠鸟；梅园开花时在梅树下等绣眼鸟。'], ['可选', '安静地远看褐渔鸮，不靠近。']],
+  prep: ['望远镜', '手套和帽子：早上约 3°C', '图鉴筛选“林地公园”，把北红尾鸲和红胁蓝尾鸲对比一下'],
+  care: ['林鸟动作快：先用眼睛锁定位置，眼睛不离开鸟，再把望远镜举到眼前。'] },
+{ id: '1b', m: 1, h: 2, title: '人少的南岸：南滇池国家湿地公园', sp: ['qtqy', 'rtqy', 'gdj', 'ftpt', 'cl', 'hs'], best: [9, 11.5],
+  time: '9:00–11:30，或 15:00–17:30。从主城出发车程约 1 小时，安排半天到一天。',
+  route: [['出发', '自驾或打车到南滇池国家湿地公园。'], ['湖边', '沿湖岸走，找开阔水面上的潜鸭群，逐只看头色和眼睛。'], ['回程', '下午光线变暖后可在湖边再停一次。']],
+  prep: ['望远镜；单筒望远镜更有帮助', '午餐和水：附近餐饮少', '图鉴页“青头潜鸭”“白眼潜鸭”'],
+  care: ['青头潜鸭是极危物种，不保证能看到。看到后保持距离，不发布精确位置。'] },
+{ id: '2a', m: 2, h: 1, title: '山地林鸟：西山与猫猫箐', sp: ['bjzm', 'htcw', 'zxd', 'hlj', 'zblw', 'hdb', 'hzlq'], best: [9, 11.5],
+  time: '9:00–11:30。2027 年春节是 2 月 6 日，假期景区人多，建议节后的工作日去。',
+  route: [['西山森林公园', '从较低的林道开始，跟着“红头长尾山雀”这类混群移动。'], ['猫猫箐', '植被密，沿路慢走，在溪沟边找紫啸鸫。'], ['下山', '中午前结束。']],
+  prep: ['好走的鞋：山路', '望远镜', '水和小零食'],
+  care: ['山路窄，遇到人多的路段可以先停下等一会。'] },
+{ id: '2b', m: 2, h: 2, title: '红嘴鸥换羽：看头罩长出来', sp: ['hzo', 'ztou', 'xpt', 'ftpt'], best: [8.5, 10.5],
+  time: '8:30–10:30。部分红嘴鸥开始长出深褐色头罩，同一群里能看到冬羽、过渡和繁殖羽。',
+  route: [['海埂大坝或翠湖', '选一处鸥群多的地方，固定站在一个位置。'], ['数一数', '用望远镜扫过一段栏杆，分别数“白头”“花头”“深色头罩”的个体。'], ['可选', '找换上繁殖羽的小䴙䴘和长出冠羽的凤头䴙䴘。']],
+  prep: ['望远镜', '记录本：记三类头色的数量，3 月再数一次对比'],
+  care: ['不投喂面包。'] },
+{ id: '3a', m: 3, h: 1, title: '送别鸥群：最后的大群', sp: ['hzo', 'ztou', 'bhwq', 'hxlwq'], best: [8.5, 10.5],
+  time: '8:30–10:30。3 月中下旬红嘴鸥陆续北返，这是看大群的最后时段；黑颈鹤也在 3 月中旬前后北返。',
+  route: [['翠湖或大观公园', '看繁殖羽红嘴鸥。'], ['顺路公园树林', '冬候鸟北红尾鸲、红胁蓝尾鸲也快要离开，再看一次。']],
+  prep: ['望远镜', '薄外套：3 月白天约 22°C'],
+  care: ['春季风大、干燥，带唇膏和水。'] },
+{ id: '3b', m: 3, h: 2, title: '春天开始：林鸟鸣唱', sp: ['qq', 'hdb', 'bjzm', 'htcw', 'alxy'], best: [8, 10.5],
+  time: '8:00–10:30。日出提前到 7:20 左右，林鸟开始鸣唱，早上的声音最多。',
+  route: [['黑龙潭或植物园', '这一期以“听”为主：听到一种声音，停下来找到发声的鸟。'], ['记录', '把找到的鸟和它的叫声对应记下。']],
+  prep: ['望远镜', '手机录音（只录，不外放回放）'],
+  care: ['不用外放鸟鸣录音引鸟，会干扰繁殖期的鸟。'] },
+{ id: '4a', m: 4, h: 1, title: '春季过境：湿地浅滩上的鹬', sp: ['qjy', 'bl', 'cl2', 'bjl'], best: [8, 10.5],
+  time: '8:00–10:30，或 16:30–18:30。过境鹬类停留时间短，可以隔几天去一次。',
+  route: [['宝丰湿地公园', '找有泥滩、浅水的区域，鹬类在水边走动觅食。'], ['捞鱼河湿地公园', '下午去湖边浅滩。']],
+  prep: ['望远镜', '帽子和防晒：4 月日照强，白天约 25°C'],
+  care: ['浅滩边泥软，不走下栈道。'] },
+{ id: '4b', m: 4, h: 2, title: '繁殖羽与夏候鸟', sp: ['cl2', 'bl', 'xpt', 'qq', 'cn'], best: [7.5, 10],
+  time: '7:30–10:00。池鹭、白鹭换上繁殖羽，颜色最好看。观鸟季在这一期结束。',
+  route: [['黑龙潭公园', '水边看池鹭的栗红色头颈和翠鸟。'], ['宝丰湿地公园', '看白鹭的繁殖辫羽和小䴙䴘的栗红颈侧。'], ['整理', '回到“我的”页面，看看这个冬天记录了哪些鸟。']],
+  prep: ['望远镜', '防晒'],
+  care: ['繁殖期远离鸟巢，看到亲鸟警戒叫就后退。'] }
+];
+
+const PLAN_PLACES = { '11a': ['haigeng', 'daguan'], '11b': ['baofeng', 'laoyuhe'], '12a': ['cuihu'], '12b': ['nianhu'], '1a': ['zhiwuyuan', 'heilongtan'], '1b': ['nandianchi'], '2a': ['xishan'], '2b': ['haigeng', 'cuihu'], '3a': ['cuihu', 'daguan'], '3b': ['heilongtan', 'zhiwuyuan'], '4a': ['baofeng', 'laoyuhe'], '4b': ['heilongtan', 'baofeng'] };
+
+/* 昆明长期气候平均（约数）：月均最高 / 最低气温 ℃，月降水 mm */
+const CLIMATE = { 11: [19, 8, 37], 12: [16, 4, 13], 1: [16, 3, 15], 2: [18, 4, 15], 3: [22, 7, 20], 4: [25, 11, 25] };
+const SEASON = [11, 12, 1, 2, 3, 4];
+
+/* =========================================================
+   工具
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pad = n => String(n).padStart(2, '0');
+const hm = mins => { const m = Math.round(mins); return pad(Math.floor(m / 60)) + ':' + pad(m % 60); };
+const yearOf = m => (m >= 11 ? 2026 : 2027);
+const daysIn = (y, m) => new Date(y, m, 0).getDate();
+
+/* 日出日落（NOAA 近似算法），昆明 25.04°N 102.71°E，北京时间 */
+function sunTimes(y, m, d) {
+  const lat = 25.04, lon = 102.71, tz = 8, rad = Math.PI / 180;
+  const N = Math.round((Date.UTC(y, m - 1, d) - Date.UTC(y, 0, 1)) / 864e5) + 1;
+  const g = 2 * Math.PI / 365 * (N - 1);
+  const eqt = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+  const decl = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+  const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(decl)) - Math.tan(lat * rad) * Math.tan(decl)) / rad;
+  return { rise: 720 - 4 * (lon + ha) - eqt + tz * 60, set: 720 - 4 * (lon - ha) - eqt + tz * 60 };
+}
+function periodRange(p) {
+  const y = yearOf(p.m), last = daysIn(y, p.m);
+  return p.h === 1 ? [1, 15] : [16, last];
+}
+function periodLabel(p) { return p.m + '月' + (p.h === 1 ? '上半月' : '下半月'); }
+function currentPeriodId(date) {
+  const m = date.getMonth() + 1, d = date.getDate();
+  if (!SEASON.includes(m)) return null;
+  return m + (d <= 15 ? 'a' : 'b');
+}
+function crowdHtml(c) {
+  const one = (n, k) => `<span>${k} <span class="crowd" aria-label="${['', '少', '中', '多'][n]}">${[1, 2, 3].map(i => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</span> ${['', '少', '中', '多'][n]}</span>`;
+  return `<span class="row" style="gap:4px 14px">${one(c[0], '工作日')}${one(c[1], '周末')}</span>`;
+}
+function monthsHtml(ms, wide) {
+  const cur = new Date().getMonth() + 1;
+  return `<div class="months${wide ? ' wide' : ''}" aria-label="可见月份：${ms.map(m => m + '月').join('、')}">${SEASON.map(m => `<span class="${ms.includes(m) ? 'on' : ''}${m === cur ? ' cur' : ''}">${m}</span>`).join('')}</div>`;
+}
+
+/* 体形示意（线描，表示类别而非具体鸟种） */
+function sil(t) {
+  const W = '<path class="g" d="M4 33h56"/>', G = '<path class="g" d="M10 39h44"/>', B = '<path class="g" d="M6 34h52"/>';
+  const S = {
+    gull: G + '<path class="f" d="M14 21c4-6 16-7 26-3l16 6-16 0c-8 4-20 4-26-3z"/><circle class="f" cx="17" cy="15" r="5"/><path d="M12 15l-6 1.5M27 27v12M32 27v12"/><circle class="k" cx="16" cy="14" r="0.9"/>',
+    duck: W + '<path class="f" d="M14 33c0-7 6-11 17-11 9 0 15 3 19 7l4-3-1 7z"/><path class="f" d="M20 24c-1-3 0-8-3-10-3-2-6 1-6 4"/><circle class="f" cx="15" cy="15" r="5"/><path d="M10.5 16l-6 1.5"/><circle class="k" cx="14" cy="14" r="0.9"/>',
+    grebe: W + '<path class="f" d="M18 33c0-6 5-9 13-9 8 0 13 3 15 9z"/><path class="f" d="M24 25c0-6-1-10-3-12"/><circle class="f" cx="20" cy="12" r="4"/><path d="M16.5 12.5l-6 1"/><circle class="k" cx="19" cy="11.5" r="0.9"/>',
+    coot: W + '<path class="f" d="M16 33c0-8 6-12 15-12 9 0 15 5 16 12z"/><circle class="f" cx="18" cy="17" r="5"/><path d="M13.5 17.5l-4 1.5"/><path class="k" d="M13 15.5h2.5v2h-2.5z"/><circle class="k" cx="17.5" cy="16" r="0.9"/>',
+    cormorant: W + '<path class="f" d="M12 33c4-5 14-6 26-5 6 0 12 2 16 5z"/><path class="f" d="M18 30c-2-6-2-13 0-17"/><circle class="f" cx="19" cy="12" r="3.6"/><path d="M15.5 12.5l-6 .5 1 1.5"/>',
+    heron: '<path class="g" d="M20 41h30"/><path class="f" d="M28 14c6-2 14 1 18 8l6 6-10-2c-6 1-12-2-14-7z"/><path d="M29 15c-4-2-6-6-4-9"/><circle class="f" cx="25" cy="6" r="3"/><path d="M22 6.5l-10 2M36 25v16M40 25l2 16"/>',
+    crane: '<path class="g" d="M16 42h36"/><path class="f" d="M26 16c8-3 18 0 22 6l6 8-8-2c-6 3-16 1-20-5z"/><path d="M27 17c-1-5-1-9 0-12"/><circle class="f" cx="27" cy="5" r="3"/><path d="M24.5 5.5l-7 2M34 26v16M38 26v16"/>',
+    wader: '<path class="g" d="M14 41h36"/><path class="f" d="M22 20c4-4 14-4 20-1l10 5-10 1c-6 3-16 2-20-5z"/><circle class="f" cx="22" cy="16" r="4"/><path d="M18.5 16.5l-10 2M30 26l-1 15M34 26l1 15"/><circle class="k" cx="21.5" cy="15" r="0.9"/>',
+    perch: B + '<path class="f" d="M22 18c5-4 13-2 15 4 2 5-2 10-8 10-6 0-9-6-7-14z"/><circle class="f" cx="22" cy="16" r="5"/><path d="M17.5 16.5l-4 1M35 27l12 6M27 32l-1 2M31 32l1 2"/><circle class="k" cx="21" cy="15" r="0.9"/>',
+    longtail: B + '<path class="f" d="M18 17c5-4 13-2 15 4 2 5-2 10-8 10-6 0-9-6-7-14z"/><circle class="f" cx="18" cy="15" r="4.5"/><path d="M14 15.5l-4 1M31 26l25 14M23 31l-1 3M27 31l1 3"/><circle class="k" cx="17" cy="14" r="0.9"/>',
+    raptor: B + '<path class="f" d="M26 14c5-1 9 2 10 8 1 6-1 11-6 12-4 0-7-4-7-10 0-5 1-9 3-10z"/><circle class="f" cx="28" cy="10" r="5"/><path d="M23.5 9.5c-2 0-2.5 1.5-2 3M31 33l4 6M28 34v1"/><circle class="k" cx="27" cy="9" r="0.9"/>',
+    owl: B + '<path class="f" d="M20 20c0-6 5-9 11-9s11 3 11 9v8c0 4-5 6-11 6s-11-2-11-6z"/><path d="M22 12l-2-5M40 12l2-5"/><circle cx="26.5" cy="18" r="2.6"/><circle cx="35.5" cy="18" r="2.6"/><circle class="k" cx="26.5" cy="18" r="1"/><circle class="k" cx="35.5" cy="18" r="1"/><path d="M31 21l-1 2h2z"/>',
+    kingfisher: B + '<path class="f" d="M26 21c5-3 11-1 12 4 1 4-2 8-7 8-4 0-6-4-5-12z"/><circle class="f" cx="25" cy="17" r="6"/><path d="M19.5 17.5l-11 1.5M37 29l5 3M29 33v1"/><circle class="k" cx="24" cy="16" r="0.9"/>',
+    wagtail: '<path class="g" d="M8 37h48"/><path class="f" d="M18 25c5-4 13-3 16 1l20 3-20 2c-5 2-13 1-16-6z"/><circle class="f" cx="18" cy="21" r="4.2"/><path d="M14 21.5l-4 1M25 31v6M29 31l1 6"/><circle class="k" cx="17" cy="20" r="0.9"/>'
+  };
+  return `<svg class="sil" viewBox="0 0 64 44" aria-hidden="true" focusable="false">${S[t] || S.perch}</svg>`;
+}
+
+/* 大小比较：常用参照鸟 */
+const REFS = [['麻雀', 14], ['鸽子', 32], ['绿头鸭', 58], ['苍鹭', 94]];
+function sizeText(L) {
+  const lower = REFS.filter(r => r[1] <= L).pop(), upper = REFS.find(r => r[1] > L);
+  if (!lower) return `比麻雀（14 cm）还小`;
+  if (!upper) return `比苍鹭（94 cm）还大`;
+  if (Math.abs(L - lower[1]) <= 2) return `和${lower[0]}差不多大`;
+  if (Math.abs(upper[1] - L) <= 2) return `和${upper[0]}差不多大`;
+  return `介于${lower[0]}（${lower[1]} cm）和${upper[0]}（${upper[1]} cm）之间`;
+}
+function sizeBar(L) {
+  const max = 120, pos = v => (Math.min(v, max) / max * 100).toFixed(1) + '%';
+  return `<div class="sizebar" aria-hidden="true"><div class="axis"></div>${REFS.map(r => `<div class="ref" style="left:${pos(r[1])}"><span>${r[0]}</span></div>`).join('')}<div class="me" style="left:${pos(L)}"></div></div>`;
+}
+
+/* =========================================================
+   记录：已见鸟种、已去过的日程
+   记录存在本机浏览器（localStorage），可在“我的”里导出备份。
+   ========================================================= */
+const LOG_KEY = 'km-birds-log', PREF_KEY = 'km-birds-prefs';
+const log = { seen: {}, done: {} };
+let lastSaved = null, saveErr = '';
+let weather = null, weatherState = 'none';
+try { Object.assign(log, JSON.parse(localStorage.getItem(LOG_KEY) || '{}')); } catch (e) {}
+
+function persist() {
+  try { localStorage.setItem(LOG_KEY, JSON.stringify(log)); lastSaved = new Date(); saveErr = ''; }
+  catch (e) { saveErr = '浏览器不允许保存'; }
+  renderStatus();
+}
+function toggleSeen(id) {
+  if (log.seen[id]) delete log.seen[id];
+  else { const d = new Date(); log.seen[id] = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  persist(); render();
+}
+function toggleDone(id) {
+  if (log.done[id]) delete log.done[id]; else log.done[id] = true;
+  persist(); render();
+}
+
+/* 天气：直接向 Open-Meteo 请求昆明 8 天预报，结果缓存在本机；离线时用缓存 */
+const WX_KEY = 'km-birds-weather';
+const WX_URL = 'https://api.open-meteo.com/v1/forecast?latitude=25.04&longitude=102.71&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max&timezone=Asia%2FShanghai&forecast_days=8';
+try { weather = JSON.parse(localStorage.getItem(WX_KEY) || 'null'); } catch (e) {}
+let wxFetching = false;
+async function loadWeather(force) {
+  const age = weather && weather.updatedAt ? Date.now() - new Date(weather.updatedAt).getTime() : Infinity;
+  if (wxFetching || (!force && age < 2 * 36e5)) return;
+  wxFetching = true; weatherState = 'loading'; if (route.tab === 'plan') render();
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 12000);
+    const r = await fetch(WX_URL, { signal: ctl.signal }); clearTimeout(t);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = (await r.json()).daily;
+    weather = { source: 'Open-Meteo', updatedAt: new Date().toISOString(), days: d.time.map((date, i) => ({
+      date, code: d.weather_code[i], tmax: d.temperature_2m_max[i], tmin: d.temperature_2m_min[i],
+      pop: d.precipitation_probability_max[i], wind: d.wind_speed_10m_max[i] })) };
+    try { localStorage.setItem(WX_KEY, JSON.stringify(weather)); } catch (e) {}
+    weatherState = 'ready';
+  } catch (e) { weatherState = 'error'; }
+  wxFetching = false;
+  if (route.tab === 'plan') render();
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') loadWeather(false); });
+
+/* 导出 / 导入记录（JSON） */
+function exportLog() {
+  const d = new Date(), name = 'kunming-birds-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '.json';
+  const blob = new Blob([JSON.stringify({ app: 'kunming-birds', version: 1, exportedAt: d.toISOString(), seen: log.seen, done: log.done }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+function importLog(file) {
+  const msg = $('#io-msg');
+  file.text().then(t => {
+    const d = JSON.parse(t);
+    if (!d || typeof d.seen !== 'object') throw new Error('format');
+    let n = 0;
+    for (const [id, date] of Object.entries(d.seen || {})) {
+      if (!SPById[id] || !/^\d{4}-\d{2}-\d{2}$/.test(String(date))) continue;
+      if (!log.seen[id] || date < log.seen[id]) { log.seen[id] = date; n++; }
+    }
+    for (const id of Object.keys(d.done || {})) if (PLANS.some(p => p.id === id) && !log.done[id]) { log.done[id] = true; n++; }
+    persist(); render();
+    const m2 = $('#io-msg'); if (m2) m2.textContent = '已导入：新增或更新 ' + n + ' 条。原有记录都保留，同一种鸟保留更早的日期。';
+  }).catch(() => { if (msg) msg.textContent = '没有导入：这个文件不是本手帐导出的记录。请选择以 kunming-birds 开头的 .json 文件。'; });
+}
+
+/* =========================================================
+   设置
+   ========================================================= */
+const prefs = { pal: 'oat', font: 'normal' };
+try { Object.assign(prefs, JSON.parse(localStorage.getItem(PREF_KEY) || '{}')); } catch (e) {}
+function applyPrefs() {
+  document.documentElement.setAttribute('data-palette', prefs.pal);
+  document.documentElement.setAttribute('data-font', prefs.font);
+  try { localStorage.setItem(PREF_KEY, JSON.stringify(prefs)); } catch (e) {}
+}
+applyPrefs();
+
+/* =========================================================
+   路由：#plan[/期号] · #guide[/鸟种] · #manual[/节] · #me
+   ========================================================= */
+let route = { tab: 'plan', arg: '' };
+let guideFilter = { env: 'all', q: '', now: false };
+function parseHash() {
+  const h = decodeURIComponent(location.hash.replace(/^#/, ''));
+  const [tab, arg] = h.split('/');
+  route = { tab: ['plan', 'guide', 'manual', 'me'].includes(tab) ? tab : 'plan', arg: arg || '' };
+}
+
+/* ---------- 日程 ---------- */
+function wxText(code) {
+  if (code === 0) return '晴'; if (code === 1) return '大致晴'; if (code === 2) return '多云'; if (code === 3) return '阴';
+  if (code === 45 || code === 48) return '雾'; if (code >= 51 && code <= 57) return '毛毛雨';
+  if (code === 61 || code === 80) return '小雨'; if (code === 63 || code === 81) return '中雨'; if (code === 65 || code === 82) return '大雨';
+  if (code >= 71 && code <= 77) return '雪'; if (code >= 85 && code <= 86) return '阵雪'; if (code >= 95) return '雷雨';
+  return '—';
+}
+function weatherCard() {
+  const today = new Date();
+  const st = sunTimes(today.getFullYear(), today.getMonth() + 1, today.getDate());
+  let body = '';
+  const days = weather && Array.isArray(weather.days) ? weather.days : null;
+  const upd = weather && weather.updatedAt ? new Date(weather.updatedAt) : null;
+  const ageH = upd ? (Date.now() - upd.getTime()) / 36e5 : Infinity;
+  const todayKey = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+  if (days && ageH < 72) {
+    const rows = days.filter(d => d.date >= todayKey).slice(0, 7);
+    body = `<div class="wx-tbl"><table><thead><tr><th>日期</th><th>天气</th><th>气温 ℃</th><th>降水概率</th><th>风 km/h</th><th>上午观鸟</th></tr></thead><tbody>${rows.map(d => {
+      const dt = new Date(d.date + 'T00:00:00'); const wk = '日一二三四五六'[dt.getDay()];
+      const good = (d.pop ?? 0) < 40 && (d.wind ?? 0) < 20;
+      return `<tr><td class="n">${dt.getMonth() + 1}/${dt.getDate()} 周${wk}</td><td>${wxText(d.code)}</td><td class="n">${Math.round(d.tmin)}–${Math.round(d.tmax)}</td><td class="n">${d.pop ?? '—'}%</td><td class="n">${Math.round(d.wind ?? 0)}</td><td class="${good ? 'ok' : 'so'}">${good ? '适合' : '可能受影响'}</td></tr>`;
+    }).join('')}</tbody></table></div>
+    <p class="note">预报来源：${esc(weather.source || 'Open-Meteo')}，更新于 ${upd.getMonth() + 1}月${upd.getDate()}日 ${pad(upd.getHours())}:${pad(upd.getMinutes())}${ageH > 30 ? '（已超过一天，可能不准）' : ''}${weatherState === 'error' ? '；刚才重新获取没有成功，显示的是上次的结果' : ''}。“适合”的标准：降水概率低于 40%，最大风速低于 20 km/h。</p>`;
+  } else {
+    const m = today.getMonth() + 1, c = CLIMATE[m];
+    body = `<p class="note">${weatherState === 'loading' ? '正在读取预报。' : weatherState === 'error' ? '没有取到预报：网络不通或预报服务没有响应。下次打开页面时会再试。' : '这里还没有近期预报。'}${c ? `本月长期平均：最高约 ${c[0]}°C，最低约 ${c[1]}°C，月降水约 ${c[2]} mm。` : ''}出门前可在中国天气网查看昆明预报：<a href="http://www.weather.com.cn/weather/101290101.shtml" target="_blank" rel="noopener">weather.com.cn/weather/101290101.shtml</a></p>`;
+  }
+  return `<div class="card weather"><div class="row" style="justify-content:space-between"><h2>今天的出行条件</h2><span class="note num">${today.getMonth() + 1}月${today.getDate()}日</span></div>
+    <div class="facts"><div><span class="k">日出</span><span class="v">${hm(st.rise)}</span></div><div><span class="k">日落</span><span class="v">${hm(st.set)}</span></div><div><span class="k">鸟最活跃</span><span class="v">${hm(st.rise + 30)}–${hm(st.rise + 180)}</span></div><div><span class="k">傍晚时段</span><span class="v">${hm(st.set - 120)}–${hm(st.set)}</span></div></div>
+    ${body}</div>`;
+}
+function timeline(p, st) {
+  const lo = 6, hi = 20, x = h => ((h - lo) / (hi - lo) * 100).toFixed(2) + '%';
+  const rise = st.rise / 60, set = st.set / 60;
+  return `<div class="timebox"><span class="label">一天中的时段（${lo}:00–${hi}:00）</span>
+    <div class="timeline" role="img" aria-label="日出 ${hm(st.rise)}，日落 ${hm(st.set)}，建议 ${hm(p.best[0] * 60)} 到 ${hm(p.best[1] * 60)}">
+      <div class="day" style="left:${x(rise)};width:calc(${x(set)} - ${x(rise)})"></div>
+      <div class="best" style="left:${x(p.best[0])};width:calc(${x(p.best[1])} - ${x(p.best[0])})"></div>
+      ${[6, 9, 12, 15, 18].map(h => `<span class="tick" style="left:${x(h)}">${h}</span>`).join('')}
+    </div>
+    <span class="note">浅色底：日出到日落；框：建议时段 ${hm(p.best[0] * 60)}–${hm(p.best[1] * 60)}</span></div>`;
+}
+function renderPlan() {
+  const curId = currentPeriodId(new Date());
+  const id = route.arg && PLANS.find(p => p.id === route.arg) ? route.arg : (curId || PLANS[0].id);
+  const i = PLANS.findIndex(p => p.id === id), p = PLANS[i];
+  const [d1, d2] = periodRange(p), y = yearOf(p.m), mid = Math.round((d1 + d2) / 2);
+  const st = sunTimes(y, p.m, mid), c = CLIMATE[p.m];
+  const isNow = p.id === curId;
+  const places = PLAN_PLACES[p.id] || [];
+  $('#v-plan').innerHTML = `
+    <header class="pagehead"><h1 id="h-plan">观鸟日程</h1><p class="sub">2026 年 11 月 – 2027 年 4 月 · 每半个月一期 · 共 ${PLANS.length} 期，已去过 ${PLANS.filter(q => log.done[q.id]).length} 期</p></header>
+    <div class="period-nav">
+      <button class="btn quiet" type="button" id="prev-period" ${i === 0 ? 'disabled' : ''}>上一期</button>
+      <select id="period-select" aria-label="选择一期">${PLANS.map(q => `<option value="${q.id}" ${q.id === id ? 'selected' : ''}>${periodLabel(q)}${q.id === curId ? '（本期）' : ''}${log.done[q.id] ? ' · 已去过' : ''}</option>`).join('')}</select>
+      <button class="btn quiet" type="button" id="next-period" ${i === PLANS.length - 1 ? 'disabled' : ''}>下一期</button>
+    </div>
+    ${isNow ? weatherCard() : ''}
+    <article class="card">
+      <div class="plan-title"><span class="label">${periodLabel(p)} · ${p.m}月${d1}日–${d2}日${isNow ? '<span class="tag-now">本期</span>' : ''}</span><h2>${esc(p.title)}</h2></div>
+      <div class="facts"><div><span class="k">日出（期中）</span><span class="v">${hm(st.rise)}</span></div><div><span class="k">日落</span><span class="v">${hm(st.set)}</span></div><div><span class="k">平均最高</span><span class="v">${c[0]}°C</span></div><div><span class="k">平均最低</span><span class="v">${c[1]}°C</span></div></div>
+      ${timeline(p, st)}
+      <div><h3>建议时间</h3><p>${esc(p.time)}</p></div>
+      <div><h3>目标鸟种</h3><div class="chips" style="margin-top:6px">${p.sp.map(s => `<a class="chip" href="#guide/${s}">${SPById[s].n}${log.seen[s] ? ' · 已见' : ''}</a>`).join('')}</div></div>
+      <div><h3>路线</h3><ol class="route" style="margin-top:6px">${p.route.map(r => `<li><b>${esc(r[0])}</b>：${esc(r[1])}</li>`).join('')}</ol></div>
+      ${places.length ? `<div class="places">${places.map(k => { const pl = PLACES[k]; return `<div><span class="label">${esc(pl.n)} · ${esc(pl.area)}</span><p class="note">交通：${esc(pl.go)} 开放：${esc(pl.open)}</p><p class="note">人流：${crowdHtml(pl.crowd)}</p></div>`; }).join('')}</div>` : ''}
+      <div><h3>准备</h3><ul class="plain" style="margin-top:6px">${p.prep.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div><h3>注意</h3><ul class="plain" style="margin-top:6px">${p.care.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+      <div class="row"><button class="btn${log.done[p.id] ? '' : ' quiet'}" type="button" id="done-btn" aria-pressed="${log.done[p.id] ? 'true' : 'false'}">${log.done[p.id] ? '已去过 · 点击取消' : '标记为已去过'}</button></div>
+    </article>`;
+  $('#period-select').onchange = e => { location.hash = 'plan/' + e.target.value; };
+  $('#prev-period').onclick = () => { if (i > 0) location.hash = 'plan/' + PLANS[i - 1].id; };
+  $('#next-period').onclick = () => { if (i < PLANS.length - 1) location.hash = 'plan/' + PLANS[i + 1].id; };
+  $('#done-btn').onclick = () => toggleDone(p.id);
+}
+
+/* ---------- 图鉴 ---------- */
+function renderGuide() {
+  if (route.arg && SPById[route.arg]) return renderSpecies(SPById[route.arg]);
+  const cur = new Date().getMonth() + 1;
+  const q = guideFilter.q.trim().toLowerCase();
+  const list = SP.filter(s => (guideFilter.env === 'all' || s.env === guideFilter.env)
+    && (!guideFilter.now || s.m.includes(cur))
+    && (!q || s.n.includes(q) || s.sci.toLowerCase().includes(q)));
+  const v = $('#v-guide');
+  if (!v.querySelector('#guide-q')) {
+    v.innerHTML = `<header class="pagehead"><h1 id="h-guide">鸟种图鉴</h1><p class="sub">${SP.length} 种 · 昆明 11–4 月常见或值得找的鸟</p></header>
+      <div class="filters">
+        <input type="search" id="guide-q" placeholder="输入名字，例如：鸥、潜鸭" aria-label="按名字搜索">
+        <div class="row"><div class="seg" role="group" aria-label="生境">${[['all', '全部'], ['water', '水边'], ['wood', '林地公园'], ['far', '周边远行']].map(e => `<button type="button" data-env="${e[0]}">${e[1]}</button>`).join('')}</div>
+        <label class="check"><input type="checkbox" id="guide-now"> 只看本月可见</label></div>
+      </div>
+      <p class="note" id="guide-count"></p>
+      <ul class="splist" id="guide-list"></ul>
+      <p class="note">左侧是这种鸟的照片，点开可看大图和拍摄者。右侧 6 格依次是 11、12、1、2、3、4 月，深色格表示这个月在昆明能看到，带黑框的是当前月份。</p>`;
+    $('#guide-q').addEventListener('input', e => { guideFilter.q = e.target.value; renderGuide(); });
+    $('#guide-now').addEventListener('change', e => { guideFilter.now = e.target.checked; renderGuide(); });
+    v.querySelectorAll('[data-env]').forEach(b => b.addEventListener('click', () => { guideFilter.env = b.dataset.env; renderGuide(); }));
+  }
+  $('#guide-q').value = guideFilter.q;
+  $('#guide-now').checked = guideFilter.now;
+  v.querySelectorAll('[data-env]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.env === guideFilter.env)));
+  $('#guide-count').textContent = list.length ? `显示 ${list.length} 种，已见 ${list.filter(s => log.seen[s.id]).length} 种` : '没有符合条件的鸟种。可以清空搜索框，或把生境切换为“全部”。';
+  $('#guide-list').innerHTML = list.map(s => `<li><a href="#guide/${s.id}">${thumbHtml(s)}<div><div class="sp-name">${s.n}${log.seen[s.id] ? ' <span class="seen-mark">已见</span>' : ''}</div><div class="sp-meta">${ENV[s.env]} · ${s.len} cm · ${s.f}${s.prot ? ' · ' + s.prot : ''}</div></div>${monthsHtml(s.m)}</a></li>`).join('');
+  $('#guide-list').hidden = !list.length;
+}
+function renderSpecies(s) {
+  const v = $('#v-guide');
+  v.innerHTML = `<a class="btn quiet back" href="#guide">返回图鉴</a>
+    <article class="card">
+      ${photoHtml(s)}
+      <div class="sp-head"><div><h1 id="h-guide">${s.n}</h1><p class="sci">${s.sci}</p></div><div class="big-sil">${sil(s.t)}</div></div>
+      <dl class="kv"><dt>体长</dt><dd><span class="num">${s.len}</span> cm · ${sizeText(s.L)}</dd><dt>生境</dt><dd>${ENV[s.env]}</dd><dt>易见程度</dt><dd>${s.f}</dd>${s.prot ? `<dt>保护级别</dt><dd>${s.prot}</dd>` : ''}</dl>
+      ${sizeBar(s.L)}
+      <div><span class="label">可见月份</span><div style="margin-top:6px">${monthsHtml(s.m, true)}</div></div>
+    </article>
+    <section class="card"><h2>怎么认</h2><ul class="marks">${s.marks.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>
+    <section class="card"><h2>容易混淆</h2><p>${esc(s.sim)}</p></section>
+    <section class="card"><h2>在哪里找</h2><div class="chips">${s.where.map(k => `<span class="chip">${PLACES[k].n}</span>`).join('')}</div><p>${esc(s.tip)}</p>
+      <p class="note">出现在这些日程里：${PLANS.filter(p => p.sp.includes(s.id)).map(p => `<a href="#plan/${p.id}">${periodLabel(p)}</a>`).join('、') || '暂无'}</p></section>
+    <section class="card"><h2>记录</h2>
+      <p class="note">上面的照片只有一张。想看雌鸟、幼鸟或飞行姿态，可以在百度百科看更多照片：<a href="https://baike.baidu.com/item/${encodeURIComponent(s.n)}" target="_blank" rel="noopener">baike.baidu.com/item/${s.n}</a></p>
+      <div class="row"><button class="btn${log.seen[s.id] ? '' : ' quiet'}" type="button" id="seen-btn" aria-pressed="${log.seen[s.id] ? 'true' : 'false'}">${log.seen[s.id] ? '已见 · ' + log.seen[s.id] + ' · 点击取消' : '记为已见（今天）'}</button></div></section>`;
+  $('#seen-btn').onclick = () => toggleSeen(s.id);
+}
+
+/* ---------- 手册 ---------- */
+const MANUAL = [
+{ id: 'gear', t: '出门带什么', d: '望远镜、衣服、记录', body: `
+  <h3>望远镜</h3><p>选 8 倍：8×42 视野亮、好找鸟；8×32 更轻。10 倍放大更多，但手抖更明显，林鸟更难跟住。只带一副就够。</p>
+  <h3>衣服</h3><p>昆明冬天早晚冷、中午暖。12–1 月早上约 3–5°C，中午可到 16°C。穿可以脱的层：内层速干，中层抓绒，外层防风。颜色选灰、褐、绿，避免亮白和鲜红。</p>
+  <h3>防晒</h3><p>昆明海拔约 1900 米，冬天紫外线也强：帽子、太阳镜、防晒霜。</p>
+  <h3>记录</h3><p>一个小本子或手机备忘录。每次记：日期、地点、开始和结束时间、鸟种、数量。不确定的写“疑似”，不要勉强定种。</p>
+  <h3>可选</h3><p>折叠坐垫、保温杯、降噪耳塞（等鸟时用，听鸟时取下）。</p>` },
+{ id: 'bino', t: '望远镜怎么用', d: '对焦三步', body: `
+  <ol class="order"><li>调宽度：两个镜筒向内或向外折，直到看到一个圆形视野，而不是两个圆。</li>
+  <li>调左眼：闭上右眼，用中间的对焦轮把远处一个固定物体（比如招牌上的字）调清楚。</li>
+  <li>调右眼：闭上左眼，只转右目镜上的屈光度环，把同一物体调清楚。记住这个刻度，以后不用再调。</li></ol>
+  <h3>找鸟的方法</h3><p>先用眼睛看到鸟，眼睛不离开它，再把望远镜举到眼前。不要拿着望远镜在树上来回扫，那样很难找到。</p>
+  <p>如果鸟在树上：先记住附近一个明显的标志（断枝、白色树干），从标志出发找。</p>` },
+{ id: 'id', t: '怎么认一只鸟', d: '按固定顺序看', body: `
+  <p>每次都按同一个顺序看，比记住很多细节更有用：</p>
+  <ol class="order"><li>大小：和麻雀（14 cm）、鸽子（32 cm）、绿头鸭（58 cm）比。</li>
+  <li>体形：像鸥、像鸭、像鹭，还是像麻雀一类的小鸟？图鉴里的线描就是按体形分的。</li>
+  <li>喙：长短、粗细、颜色、是否带钩。</li>
+  <li>头部：有没有眉纹、眼圈、贯眼纹、冠羽。</li>
+  <li>翅和尾：翅上有没有白斑，尾巴长短、会不会摆动。</li>
+  <li>腿和脚：颜色。白鹭的黄色脚趾就是靠这一步认出来的。</li>
+  <li>行为：潜水还是在水面觅食？在地上走还是在树梢跳？</li>
+  <li>地点和月份：查图鉴的月份格，这个月不该出现的鸟，先怀疑自己看错。</li></ol>
+  <p>看到鸟时先看，不要急着翻手机。离开以后再对照图鉴。</p>` },
+{ id: 'time', t: '什么时候去', d: '昆明冬天日出晚', body: `
+  <p>鸟在日出后两到三小时、日落前两小时最活跃。</p>
+  <p>昆明在北京时间所在时区的西边，冬天日出比北京晚很多：11 月初约 7:20，1 月初约 7:50，4 月底约 6:40。所以冬天“早上观鸟”其实是 8:30–10:30，不需要天不亮出门。</p>
+  <p>“日程”页的时段条按每期中间那天的日出日落画出，建议时段用框标出。</p>
+  <h3>天气</h3><p>小雨天水鸟照样在，但光线差、颜色难辨。大风天林鸟躲在树丛里，水面起浪，潜鸭难看清。晴天中午光线太硬，颜色反而发白。</p>` },
+{ id: 'etiquette', t: '观鸟规范', d: '不打扰鸟，也不打扰人', body: `
+  <ul class="plain"><li>保持距离：鸟停止觅食、抬头盯着你、开始走开，说明太近了，往后退。</li>
+  <li>不投喂面包和零食。红嘴鸥只喂指定售卖点的鸥粮。</li>
+  <li>不用外放鸟鸣录音引鸟，不用闪光灯。</li>
+  <li>不追赶、不惊飞鸟群拍照。</li>
+  <li>不走下栈道、不进入保护区封闭区域。</li>
+  <li>青头潜鸭、褐渔鸮这类敏感鸟种，不公开精确位置。</li></ul>` },
+{ id: 'quiet', t: '安静地观鸟', d: '避开人群的做法', body: `
+  <p>观鸟可以完全一个人进行，不需要和任何人交流。</p>
+  <ul class="plain"><li>选工作日早上。每个地点都标了工作日和周末的人流（少 / 中 / 多）。</li>
+  <li>人少的地点：宝丰湿地、捞鱼河湿地、南滇池湿地、昆明植物园、猫猫箐。</li>
+  <li>人多的地点：海埂大坝、翠湖、大观公园的周末和节假日。想去的话，在开园后第一个小时到。</li>
+  <li>在一个位置坐下等 20 分钟，比一直走动看到的鸟更多，也更少遇到人。</li>
+  <li>有人来问“在看什么”，可以只回答鸟的名字。不想说话也没有关系。</li></ul>` },
+{ id: 'places', t: '地点一览', d: `${Object.keys(PLACES).length} 个地点`, body: `
+  <div class="places">${Object.values(PLACES).map(pl => `<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;flex-direction:column;gap:4px"><h3>${esc(pl.n)}</h3><span class="note">${esc(pl.area)}</span><p>${esc(pl.note)}</p><p class="note">交通：${esc(pl.go)}</p><p class="note">开放：${esc(pl.open)}</p><p class="note">人流：${crowdHtml(pl.crowd)}</p></div>`).join('')}</div>
+  <p class="note">开放时间和票价会变化，以公园当季公告为准。</p>` },
+{ id: 'gull', t: '红嘴鸥季节的时间线', d: '2026–2027', body: `
+  <ul class="plain"><li><span class="num">10 月 5 日前后</span>：首批约 50 只到达滇池海洪湿地。</li>
+  <li><span class="num">10 月 8 日</span>：增至 700 多只。</li>
+  <li><span class="num">10 月下旬</span>：抵达海埂大坝等地，总数超过 6000 只，开始向城区扩散。</li>
+  <li><span class="num">10 月 31 日</span>：大观公园迎来首批约 300 只，比往年早 3 天。</li>
+  <li><span class="num">11 月</span>：扩散到翠湖、盘龙江；数量继续增加。</li>
+  <li><span class="num">2 月下旬起</span>：部分个体长出深褐色头罩。</li>
+  <li><span class="num">3 月中下旬</span>：陆续北返。</li></ul>
+  <p class="note">10 月至 11 月初的日期来自滇池管理局和当地新闻报道；2 月、3 月为往年规律。</p>` }
+];
+function renderManual() {
+  const v = $('#v-manual');
+  const sec = MANUAL.find(x => x.id === route.arg);
+  if (sec) {
+    const i = MANUAL.indexOf(sec);
+    v.innerHTML = `<a class="btn quiet back" href="#manual">返回目录</a>
+      <article class="card"><span class="label">手册 · ${i + 1} / ${MANUAL.length}</span><h1 id="h-manual" style="font-size:var(--fs-xl)">${sec.t}</h1><div class="prose">${sec.body}</div></article>
+      <div class="row" style="justify-content:space-between">${i > 0 ? `<a href="#manual/${MANUAL[i - 1].id}">上一节：${MANUAL[i - 1].t}</a>` : '<span></span>'}${i < MANUAL.length - 1 ? `<a href="#manual/${MANUAL[i + 1].id}">下一节：${MANUAL[i + 1].t}</a>` : ''}</div>`;
+    return;
+  }
+  v.innerHTML = `<header class="pagehead"><h1 id="h-manual">教程手册</h1><p class="sub">第一次观鸟可以按顺序读，之后当作查阅</p></header>
+    <ul class="toc">${MANUAL.map(m => `<li><a href="#manual/${m.id}"><span>${m.t}</span><span class="d">${m.d}</span></a></li>`).join('')}</ul>`;
+}
+
+/* ---------- 我的 ---------- */
+function statusText() {
+  const where = '记录只保存在这台设备上，不会上传。换手机或删除主屏幕图标前，请先导出备份。';
+  const when = lastSaved ? ` · 最近保存 ${pad(lastSaved.getHours())}:${pad(lastSaved.getMinutes())}` : '';
+  const err = saveErr ? ` 保存失败（${saveErr}）。可能是浏览器开了无痕模式，换成普通模式打开即可保存。` : '';
+  return where + when + err;
+}
+function renderStatus() { const el = $('#store-status'); if (el) el.textContent = statusText(); }
+function renderMe() {
+  const seenIds = Object.keys(log.seen).filter(id => SPById[id]).sort((a, b) => log.seen[a] < log.seen[b] ? 1 : -1);
+  $('#v-me').innerHTML = `<header class="pagehead"><h1 id="h-me">我的记录</h1><p class="sub">只记录给自己看</p></header>
+    <div class="card"><div class="stat"><div><span class="v">${seenIds.length}<span class="note"> / ${SP.length}</span></span><span class="k">已见鸟种</span></div><div><span class="v">${PLANS.filter(p => log.done[p.id]).length}<span class="note"> / ${PLANS.length}</span></span><span class="k">已去过的日程</span></div></div>
+      <p class="status" id="store-status">${statusText()}</p></div>
+    <section class="card"><h2>已见鸟种</h2>${seenIds.length ? `<ul class="splist">${seenIds.map(id => { const s = SPById[id]; return `<li><a href="#guide/${id}">${thumbHtml(s)}<div><div class="sp-name">${s.n}</div><div class="sp-meta num">${log.seen[id]}</div></div><span></span></a></li>`; }).join('')}</ul>` : '<p class="note">还没有记录。在图鉴里打开一种鸟，点“记为已见（今天）”。</p>'}</section>
+    <section class="card"><h2>显示设置</h2>
+      <div class="pref"><span>配色</span><div class="seg" role="group" aria-label="配色"><button type="button" data-pal="oat">燕麦</button><button type="button" data-pal="dusk">暮紫</button></div></div>
+      <div class="pref"><span>字号</span><div class="seg" role="group" aria-label="字号"><button type="button" data-font="normal">标准</button><button type="button" data-font="large">大</button></div></div>
+      <p class="note">深色和浅色跟随手机的外观设置。显示设置保存在这台设备上。</p></section>
+    <section class="card"><h2>备份记录</h2>
+      <p class="note">导出会生成一个 .json 文件，保存到“文件”App。导入时，文件里的记录会合并进来，现有记录不会被删除。</p>
+      <div class="row"><button class="btn quiet" type="button" id="exp-btn">导出记录</button><label class="btn quiet" for="imp-file">导入记录</label><input class="file-in" type="file" id="imp-file" accept="application/json,.json"></div>
+      <p class="note" id="io-msg" aria-live="polite"></p></section>
+    <section class="card"><details><summary>照片与字体来源</summary>
+      <p class="note">鸟种照片来自 Wikimedia Commons，按各自的知识共享（CC）许可使用，本手帐只缩小了尺寸。点名字可打开原图页面，查看完整的作者与许可信息。</p>
+      <ul class="credits">${SP.filter(s => PHOTOS[s.id]).map(s => `<li><a href="${PHOTOS[s.id].u}" target="_blank" rel="noopener">${s.n}</a>：${esc(PHOTOS[s.id].a)} · ${esc(PHOTOS[s.id].l)}</li>`).join('')}</ul>
+      <p class="note">字体：霞鹜文楷 GB 屏幕阅读版，SIL Open Font License 1.1（<a href="licenses/LXGW-WenKai-Screen-OFL.txt">许可全文</a>）。天气：Open-Meteo（CC BY 4.0）。</p></details></section>`;
+  $('#exp-btn').onclick = exportLog;
+  $('#imp-file').onchange = e => { const f = e.target.files && e.target.files[0]; if (f) importLog(f); e.target.value = ''; };
+  document.querySelectorAll('#v-me [data-pal]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.pal === prefs.pal)); b.onclick = () => { prefs.pal = b.dataset.pal; applyPrefs(); renderMe(); }; });
+  document.querySelectorAll('#v-me [data-font]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.font === prefs.font)); b.onclick = () => { prefs.font = b.dataset.font; applyPrefs(); renderMe(); }; });
+}
+
+/* ---------- 总渲染 ---------- */
+function render() {
+  ['plan', 'guide', 'manual', 'me'].forEach(t => { $('#v-' + t).hidden = t !== route.tab; });
+  document.querySelectorAll('.tabbar a').forEach(a => { if (a.dataset.tab === route.tab) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  if (route.tab === 'plan') renderPlan();
+  if (route.tab === 'guide') renderGuide();
+  if (route.tab === 'manual') renderManual();
+  if (route.tab === 'me') renderMe();
+}
+window.addEventListener('hashchange', () => {
+  const prev = route.tab + '/' + route.arg;
+  parseHash();
+  render();
+  if (prev !== route.tab + '/' + route.arg) window.scrollTo(0, 0);
+});
+parseHash();
+render();
+loadWeather(false);
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+</script>
+</body>
+</html>

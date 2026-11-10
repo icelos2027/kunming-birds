@@ -1,0 +1,16 @@
+{
+  "name": "昆明冬鸟手帐",
+  "short_name": "冬鸟手帐",
+  "description": "昆明 11–4 月观鸟：半月日程、鸟种图鉴、入门手册和天气。记录只存在本机。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2ede5",
+  "theme_color": "#f2ede5",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
